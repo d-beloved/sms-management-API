@@ -1,0 +1,27 @@
+{
+  "name": "sms-management-api",
+  "version": "1.0.0",
+  "description": "An sms management app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d-beloved/sms-management-API.git"
+  },
+  "keywords": [
+    "NODE",
+    "EXPRESS",
+    "POSTGRES"
+  ],
+  "author": "d-beloved",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/d-beloved/sms-management-API/issues"
+  },
+  "homepage": "https://github.com/d-beloved/sms-management-API#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

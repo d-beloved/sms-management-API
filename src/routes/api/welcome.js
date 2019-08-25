@@ -9,6 +9,7 @@ welcomeRoute.all('*', (req, res) => {
       createContact: 'POST /api/contacts',
       getAllContacts: 'GET /api/contacts',
       deleteContacts: 'DELETE /api/contacts/:id',
+      sendSMS: 'POST /api/sms',
     }
   });
 });

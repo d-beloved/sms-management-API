@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
 
     ReceivedSms.belongsTo(SentSms, {
       as: 'sentSms',
-      foreignKey: 'sentSmsId'
+      foreignKey: 'smsId'
     });
   };
   return ReceivedSms;

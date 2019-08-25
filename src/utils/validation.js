@@ -6,7 +6,7 @@ import isEmpty from './is_empty';
  * @description controller class with for users input validation
  *  @class ContactValidation
  */
-class ContactValidation {
+class Validation {
   /**
    *  @description method for validation of create contact input
    *  @param {object} data body of the user's request
@@ -21,6 +21,32 @@ class ContactValidation {
     }
     if (!(data.phoneNumber)) {
       error.email = 'Please enter a phone number';
+    }
+    return {
+      error,
+      isValid: isEmpty(error),
+      status: 'error'
+    };
+  }
+
+  /**
+   *  @description method for validation of send sms
+   *  @param {object} data body of the user's request
+   *  @returns {object} The body of  the response message
+   */
+  static validateSendSMS(data) {
+    const error = {};
+    data.message = data.message ? data.message : '';
+    data.sender = data.sender ? data.sender : '';
+    data.receiver = data.receiver ? data.receiver : '';
+    if (!(data.message)) {
+      error.message = 'Please type a message';
+    }
+    if (!(data.sender)) {
+      error.sender = 'Please input the sender of the message';
+    }
+    if (!(data.receiver)) {
+      error.receiver = 'Please input the receiver of the message';
     }
     return {
       error,
@@ -118,4 +144,4 @@ class ContactValidation {
   // }
 }
 
-export default ContactValidation;
+export default Validation;

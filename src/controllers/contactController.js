@@ -2,7 +2,8 @@
 import { Op } from 'sequelize';
 
 import { Contact } from '../models';
-import ContactValidation from '../utils/validation';
+import Validation from '../utils/validation';
+import trimInput from '../utils/trimInput';
 
 /**
  * @description controller class with methods for contact endpoints
@@ -17,7 +18,7 @@ class ContactController {
    * @returns {object} The body of the response message
    */
   static createContact(req, res, next) {
-    const { error, isValid } = ContactValidation.validateCreateContact(req.body);
+    const { error, isValid } = Validation.validateCreateContact(req.body);
     if (!isValid) {
       return res.status(400).json({ status: 'error', error });
     }
@@ -30,8 +31,8 @@ class ContactController {
     }
 
     const newContact = {
-      name: req.body.name,
-      phoneNumber: req.body.phoneNumber
+      name: trimInput(req.body.name.toLowerCase()),
+      phoneNumber: trimInput(req.body.phoneNumber.toLowerCase())
     };
 
     Contact.findOne({

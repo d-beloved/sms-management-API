@@ -18,6 +18,14 @@ module.exports = {
     dialect: process.env.DB_DIALECT,
   },
   production: {
-    use_env_variable: process.env.DATABASE_URL,
+    username: process.env.PROD_DB_USER,
+    password: process.env.PROD_DB_PASS,
+    database: process.env.PROD__DB_DATABASE,
+    host: process.env.PROD_DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: process.env.DB_DIALECT,
+    dialectOptions: {
+      ssl: true
+    }
   }
 };

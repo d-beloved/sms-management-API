@@ -6,7 +6,7 @@
   "scripts": {
     "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "start": "npm run build && node dist/index.js",
-    "build": "npm run migrate && rimraf dist/ && babel ./ -d dist/ --ignore node_modules --copy-files",
+    "build": "rimraf dist/ && babel ./src --out-dir dist/ --copy-files",
     "start:dev": "nodemon --watch server --exec babel-node ./index.js"
   },
   "repository": {

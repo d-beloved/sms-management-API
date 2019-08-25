@@ -70,6 +70,12 @@ class ContactController {
     Contact.findAll()
       .then((contacts) => {
         if (contacts.length >= 1) {
+          // const filteredContacts = [];
+          // for (let i = 0; i < contacts.length; i++) {
+          //   const [{ dataValues }] = contacts;
+          //   const { createdAt, updatedAt, ...rest } = dataValues;
+          //   filteredContacts.push(rest);
+          // }
           return res.status(200).json({
             message: 'Here are your contacts',
             status: 'success',

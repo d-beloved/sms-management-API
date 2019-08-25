@@ -4,7 +4,7 @@ import path from 'path';
 import log from 'fancy-log';
 import router from './src/routes';
 
-const isProduction = process.env.NODE_ENV === 'production';
+// const isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
 const app = express();

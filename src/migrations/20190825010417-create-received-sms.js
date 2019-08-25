@@ -27,7 +27,7 @@ module.exports = {
         key: 'id',
         as: 'sentSms'
       },
-      allowNull: false,
+      allowNull: true,
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL'
     },

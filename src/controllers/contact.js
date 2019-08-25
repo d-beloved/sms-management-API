@@ -89,6 +89,37 @@ class ContactController {
       })
       .catch(next);
   }
+
+  /**
+   * @description delete a contact in the app
+   * @param  {object} req body of the user's request
+   * @param  {object} res  body of the response message
+   * @param  {function} next next function to be called
+   * @returns {object} The body of the response message
+   */
+  static deleteContact(req, res, next) {
+    return Contact.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+      .then((contact) => {
+        if (!contact) {
+          return res.status(404).json({
+            error: { message: 'contact not found, please check that you are entering the right id' },
+            status: 'error'
+          });
+        }
+
+        return contact.destroy()
+          .then(() => res.status(200).json({
+            message: 'contact successfully deleted',
+            status: 'success'
+          }))
+          .catch(next);
+      })
+      .catch(next);
+  }
 }
 
 export default ContactController;

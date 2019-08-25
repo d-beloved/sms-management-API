@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import { Op } from 'sequelize';
 
 import { Contact } from '../models';
@@ -21,7 +22,6 @@ class ContactController {
       return res.status(400).json({ status: 'error', error });
     }
 
-    // eslint-disable-next-line no-restricted-globals
     if (isNaN(req.body.phoneNumber) || req.body.phoneNumber.length < 10) {
       return res.status(400).json({
         status: error,
@@ -86,6 +86,45 @@ class ContactController {
           message: 'You don\'t have any contacts yet',
           status: 'success'
         });
+      })
+      .catch(next);
+  }
+
+  /**
+   * @description delete a contact in the app
+   * @param  {object} req body of the user's request
+   * @param  {object} res  body of the response message
+   * @param  {function} next next function to be called
+   * @returns {object} The body of the response message
+   */
+  static deleteContact(req, res, next) {
+    const contactId = parseInt(req.params.id, 10);
+    if (isNaN(contactId)) {
+      return res.status(400).json({
+        error: { message: 'please enter a valid Id' },
+        status: 'error'
+      });
+    }
+
+    Contact.findOne({
+      where: {
+        id: contactId
+      }
+    })
+      .then((contact) => {
+        if (!contact) {
+          return res.status(404).json({
+            error: { message: 'contact not found, please check that you are entering the correct id' },
+            status: 'error'
+          });
+        }
+
+        return contact.destroy()
+          .then(() => res.status(200).json({
+            message: 'contact successfully deleted',
+            status: 'success'
+          }))
+          .catch(next);
       })
       .catch(next);
   }

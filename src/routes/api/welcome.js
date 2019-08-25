@@ -7,7 +7,8 @@ welcomeRoute.all('*', (req, res) => {
     message: 'Welcome to D-beloved\'s SMS management API',
     availableEndpoints: {
       createContact: 'POST /api/contacts',
-      getAllContacts: 'GET /api/contacts'
+      getAllContacts: 'GET /api/contacts',
+      deleteContacts: 'DELETE /api/contacts/:id',
     }
   });
 });

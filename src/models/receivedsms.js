@@ -1,4 +1,3 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const ReceivedSms = sequelize.define('ReceivedSms', {
     message: {

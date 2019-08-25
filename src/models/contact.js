@@ -1,4 +1,3 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Contact = sequelize.define('Contact', {
     name: {
@@ -13,15 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Contact.associate = (models) => {
-    const { sms } = models;
+    const { SentSms, ReceivedSms, } = models;
     // associations can be defined here
-    Contact.hasMany(sms, {
-      as: 'sender',
+    Contact.hasMany(SentSms, {
+      as: 'sentSms',
       foreignKey: 'senderId'
     });
 
-    Contact.hasMany(sms, {
-      as: 'receiver',
+    Contact.hasMany(ReceivedSms, {
+      as: 'receivedSms',
       foreignKey: 'receiverId'
     });
   };

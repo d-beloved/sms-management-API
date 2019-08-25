@@ -4,10 +4,10 @@
   "description": "An sms management app",
   "main": "index.js",
   "scripts": {
+    "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "start": "npm run build && node dist/index.js",
-    "build": "rimraf dist/ && babel ./ -d dist/ --ignore node_modules --copy-files",
-    "start:dev": "nodemon --watch server --exec babel-node ./index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run migrate && rimraf dist/ && babel ./ -d dist/ --ignore node_modules --copy-files",
+    "start:dev": "nodemon --watch server --exec babel-node ./index.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,10 @@
     "EXPRESS",
     "POSTGRES"
   ],
+  "engines": {
+    "node": "12.4.0",
+    "npm": "6.9.0"
+  },
   "author": "d-beloved",
   "license": "MIT",
   "bugs": {
@@ -34,6 +38,7 @@
     "pg-hstore": "^2.3.3",
     "rimraf": "^3.0.0",
     "sequelize": "^5.16.0",
+    "sequelize-cli": "^5.5.0",
     "validator": "^11.1.0"
   },
   "devDependencies": {

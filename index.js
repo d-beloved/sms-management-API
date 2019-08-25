@@ -1,19 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-// import path from 'path';
-// import router from './server/routes';
+import path from 'path';
+import log from 'fancy-log';
+import router from './src/routes';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
 const app = express();
-
-app.use(passport.initialize());
-
-app.use(cors());
-
-// swagger api documentation setup
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Normal express config defaults
 app.use(require('morgan')('dev'));
@@ -21,15 +15,10 @@ app.use(require('morgan')('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(require('method-override')());
-
 app.set('views', path.join(__dirname, 'views'));
 // set view engine as pug
 app.set('view engine', 'pug');
 
-if (!isProduction) {
-  app.use(errorhandler());
-}
 app.use(router);
 
 // catch 404 and forward to error handler
@@ -73,7 +62,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 });
 
 // finally, let's start our server...
-const server = app.listen(process.env.PORT || 3000, () => {
+const server = app.listen(process.env.PORT || 3111, () => {
   log(`Listening on port ${server.address().port}`);
 });
 

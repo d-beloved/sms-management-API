@@ -2,7 +2,8 @@
 import { Op } from 'sequelize';
 
 import { Contact } from '../models';
-import ContactValidation from '../utils/validation';
+import Validation from '../utils/validation';
+import trimInput from '../utils/trimInput';
 
 /**
  * @description controller class with methods for contact endpoints
@@ -17,7 +18,12 @@ class ContactController {
    * @returns {object} The body of the response message
    */
   static createContact(req, res, next) {
-    const { error, isValid } = ContactValidation.validateCreateContact(req.body);
+    const newContact = {
+      name: trimInput(req.body.name.toLowerCase()),
+      phoneNumber: trimInput(req.body.phoneNumber.toLowerCase())
+    };
+
+    const { error, isValid } = Validation.validateCreateContact(newContact);
     if (!isValid) {
       return res.status(400).json({ status: 'error', error });
     }
@@ -28,11 +34,6 @@ class ContactController {
         error: 'Please enter a valid number not less than 10 digits'
       });
     }
-
-    const newContact = {
-      name: req.body.name,
-      phoneNumber: req.body.phoneNumber
-    };
 
     Contact.findOne({
       where: {

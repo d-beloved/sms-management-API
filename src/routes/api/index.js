@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import contactRoutes from './contactRoute';
+import smsRoutes from './smsRoutes';
 
 
 const routes = Router();
@@ -18,5 +19,6 @@ routes.use((err, req, res, next) => {
 });
 
 routes.use('/contacts', contactRoutes);
+routes.use('/sms', smsRoutes);
 
 export default routes;

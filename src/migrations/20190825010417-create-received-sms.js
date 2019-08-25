@@ -20,7 +20,7 @@ module.exports = {
         as: 'receiver',
       },
     },
-    sentSmsId: {
+    smsId: {
       type: Sequelize.INTEGER,
       references: {
         model: 'SentSms',

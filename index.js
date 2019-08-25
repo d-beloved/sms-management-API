@@ -21,45 +21,45 @@ app.set('view engine', 'pug');
 
 app.use(router);
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// // catch 404 and forward to error handler
+// app.use((req, res, next) => {
+//   const err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
-// error handlers
+// // error handlers
 
-// development error handler
-// will print stacktrace
-if (!isProduction) {
-  app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-    log(err.stack);
+// // development error handler
+// // will print stacktrace
+// if (!isProduction) {
+//   app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+//     log(err.stack);
 
-    res.status(err.status || 500);
+//     res.status(err.status || 500);
 
-    res.json({
-      error: {
-        message: err.message,
-        error: err
-      },
-      status: 'error'
-    });
-  });
-}
+//     res.json({
+//       error: {
+//         message: err.message,
+//         error: err
+//       },
+//       status: 'error'
+//     });
+//   });
+// }
 
-// production error handler
-// no stacktraces leaked to user
-app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-  res.status(err.status || 500);
-  return res.json({
-    error: {
-      message: err.message,
-      error: {}
-    },
-    status: 'error'
-  });
-});
+// // production error handler
+// // no stacktraces leaked to user
+// app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+//   res.status(err.status || 500);
+//   return res.json({
+//     error: {
+//       message: err.message,
+//       error: {}
+//     },
+//     status: 'error'
+//   });
+// });
 
 // finally, let's start our server...
 const server = app.listen(process.env.PORT || 3111, () => {

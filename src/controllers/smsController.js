@@ -16,18 +16,18 @@ class SMSController {
    * @param  {function} next next function to be called
    * @returns {object} The body of the response message
    */
-  static async sendSMS(req, res, next) {
-    const { error, isValid } = Validation.validateSendSMS(req.body);
-    if (!isValid) {
-      return res.status(400).json({ status: 'error', error });
-    }
-
+  static sendSMS(req, res, next) {
     const { message, sender, receiver } = req.body;
     const newMessage = {
-      message,
+      message: trimInput(message),
       sender: trimInput(sender.toLowerCase()),
       receiver: trimInput(receiver.toLowerCase())
     };
+
+    const { error, isValid } = Validation.validateSendSMS(newMessage);
+    if (!isValid) {
+      return res.status(400).json({ status: 'error', error });
+    }
 
     if (sender === receiver) {
       return res.status(400).json({
@@ -61,34 +61,34 @@ class SMSController {
         const senderId = { senderId: contact.dataValues.id };
         const fullMessage = Object.assign(newMessage, senderId);
 
-        try {
-          SentSms.create(fullMessage)
+        SentSms.create(fullMessage)
           .then((sentMessage) => {
             const { dataValues } = sentMessage;
-            return res.status(201).json({
+            const smsMessage = dataValues;
+            res.status(201).json({
               message: 'message sent successfully',
               status: 'success',
-              body: dataValues
+              body: smsMessage
             });
-          }).catch(next);
+            return smsMessage;
+          })
+          .then((smsMessage) => {
+            const source = {
+              receiverId: receiverContact.dataValues.id,
+              smsId: smsMessage.id
+            };
+            const fullReceivedMessage = Object.assign(fullMessage, source);
 
-        }
-
-        const source = {
-          receiverId: receiverContact.dataValues.id,
-          smsId: fullMessage.dataValues.id
-        };
-        const fullReceivedMessage = Object.assign(fullMessage, source);
-
-        ReceivedSms.create(fullReceivedMessage)
-          .then((receivedMessage) => {
-            const { dataValues } = receivedMessage;
-            return res.status(201).json({
-              message: 'message sent successfully',
-              status: 'success',
-              body: dataValues
-            });
-          }).catch(next);
+            ReceivedSms.create(fullReceivedMessage)
+              .then((receivedMessage) => {
+                const { dataValues } = receivedMessage;
+                return res.status(201).json({
+                  message: 'message sent successfully',
+                  status: 'success',
+                  body: dataValues
+                });
+              }).catch(next);
+          });
       }).catch(next);
     }).catch(next);
   }

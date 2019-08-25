@@ -18,7 +18,12 @@ class ContactController {
    * @returns {object} The body of the response message
    */
   static createContact(req, res, next) {
-    const { error, isValid } = Validation.validateCreateContact(req.body);
+    const newContact = {
+      name: trimInput(req.body.name.toLowerCase()),
+      phoneNumber: trimInput(req.body.phoneNumber.toLowerCase())
+    };
+
+    const { error, isValid } = Validation.validateCreateContact(newContact);
     if (!isValid) {
       return res.status(400).json({ status: 'error', error });
     }
@@ -29,11 +34,6 @@ class ContactController {
         error: 'Please enter a valid number not less than 10 digits'
       });
     }
-
-    const newContact = {
-      name: trimInput(req.body.name.toLowerCase()),
-      phoneNumber: trimInput(req.body.phoneNumber.toLowerCase())
-    };
 
     Contact.findOne({
       where: {

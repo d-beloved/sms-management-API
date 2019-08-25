@@ -58,6 +58,31 @@ class ContactController {
     })
       .catch(next);
   }
+
+  /**
+   * @description Get all contacts in the app
+   * @param  {object} req body of the user's request
+   * @param  {object} res  body of the response message
+   * @param  {function} next next function to be called
+   * @returns {object} The body of the response message
+   */
+  static getContacts(req, res, next) {
+    Contact.findAll()
+      .then((contacts) => {
+        if (contacts.length >= 1) {
+          return res.status(200).json({
+            message: 'Here are your contacts',
+            status: 'success',
+            Contacts: contacts
+          });
+        }
+        return res.status(200).json({
+          message: 'You don\'t have any contacts yet',
+          status: 'success'
+        });
+      })
+      .catch(next);
+  }
 }
 
 export default ContactController;

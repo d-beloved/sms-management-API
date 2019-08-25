@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
 import contactRoutes from './contactRoute';
-import welcomeRoute from './welcome';
 
 
 const routes = Router();
@@ -19,6 +18,5 @@ routes.use((err, req, res, next) => {
 });
 
 routes.use('/contacts', contactRoutes);
-routes.use('/', welcomeRoute);
 
 export default routes;

@@ -4,6 +4,6 @@ import notFound from './api/welcome';
 
 const router = Router();
 router.use('/api', apiRoutes);
-router.use(notFound);
+router.all('*', notFound);
 
 export default router;

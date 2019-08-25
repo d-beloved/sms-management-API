@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 // import { Op } from 'sequelize';
 
 import { Contact, ReceivedSms, SentSms } from '../models';
@@ -91,6 +92,55 @@ class SMSController {
           });
       }).catch(next);
     }).catch(next);
+  }
+
+  /**
+   * @description Read SMS method
+   * @param  {object} req body of the user's request
+   * @param  {object} res  body of the response message
+   * @param  {function} error function to be called
+   * @returns {object} The body of the response message
+   */
+  static readSms(req, res, error) {
+    const SmsId = parseInt(req.params.smsId, 10);
+    if (isNaN(SmsId)) {
+      return res.status(400).json({
+        error: { message: 'please enter a valid sms id' },
+        status: 'error'
+      });
+    }
+
+    ReceivedSms.findOne({
+      where: {
+        smsId: SmsId
+      }
+    })
+      .then((foundSms) => {
+        if (foundSms) {
+          ReceivedSms.update({ status: 'read' }, {
+            where: { smsId: foundSms.smsId }
+          });
+          SentSms.update({ status: 'delivered' }, {
+            where: { id: foundSms.smsId }
+          });
+          return foundSms;
+        }
+      }).then((updatedSms) => {
+        const { dataValues } = updatedSms;
+        const {
+          id, updatedAt, createdAt, ...rest
+        } = dataValues;
+        return res.status(200).json({
+          message: 'message fetched successfully',
+          status: 'success',
+          body: rest
+        });
+      }).catch(() => {
+        res.status(404).json({
+          error: { message: 'message not found' },
+          status: error
+        });
+      });
   }
 }
 

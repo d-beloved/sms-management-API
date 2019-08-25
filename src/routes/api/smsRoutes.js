@@ -4,6 +4,6 @@ import SMSController from '../../controllers/smsController';
 const smsRoutes = Router();
 
 smsRoutes.post('/', SMSController.sendSMS);
-// smsRoutes.get('/', SMSController.getContacts);
+smsRoutes.get('/:smsId/read', SMSController.readSms);
 
 export default smsRoutes;

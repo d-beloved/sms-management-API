@@ -39,7 +39,7 @@
     "rimraf": "^3.0.0",
     "sequelize": "^5.16.0",
     "sequelize-cli": "^5.5.0",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
